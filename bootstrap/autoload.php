@@ -16,5 +16,11 @@ if (version_compare(PHP_VERSION, AKAUNTING_PHP, '<')) {
     die(1);
 }
 
+// Composer loads legacy helper files before Laravel registers its own error
+// handling, which floods the console with deprecation notices on newer PHP
+// versions. Runtime deprecations are still handled/logged by Laravel after
+// bootstrap; this only keeps the pre-bootstrap output readable.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 // Load composer for core
 require __DIR__ . '/../vendor/autoload.php';

@@ -2,6 +2,28 @@
 
 /*
 |--------------------------------------------------------------------------
+| Windows CLI Environment Compatibility
+|--------------------------------------------------------------------------
+|
+| PHP is commonly configured with `variables_order = EGPCS`, which fills
+| $_ENV with the whole host environment. Laravel's `serve` command forwards
+| only the names listed in ServeCommand::$passthroughVariables and compares
+| them case-sensitively. Windows exposes names such as "Path", "SystemRoot"
+| and "TEMP" in mixed case, so none of them match and the whole environment
+| is stripped from the child PHP process. The built-in server then fails with
+| "Failed to listen ... (reason: ?)" and cannot spawn subprocesses.
+|
+| Keep every variable that existed before .env was loaded. Variables coming
+| from .env are still removed from the child so that it reads the file itself.
+|
+*/
+
+if (PHP_SAPI === 'cli' && PHP_OS_FAMILY === 'Windows' && $_ENV !== []) {
+    Illuminate\Foundation\Console\ServeCommand::$passthroughVariables = array_keys($_ENV);
+}
+
+/*
+|--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
 |

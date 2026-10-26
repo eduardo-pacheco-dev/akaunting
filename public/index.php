@@ -14,6 +14,12 @@ use Livewire\Livewire;
 
 define('LARAVEL_START', microtime(true));
 
+// Composer loads legacy helper files before Laravel registers its own error
+// handling, which floods the console with deprecation notices on newer PHP
+// versions. Runtime deprecations are still handled/logged by Laravel after
+// bootstrap; this only keeps the pre-bootstrap output readable.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 $_ENV['ASSET_URL'] = $_ENV['ASSET_URL'] ?? './';
 $_ENV['LIVEWIRE_ASSET_URL'] = $_ENV['LIVEWIRE_ASSET_URL'] ?? './';
 
