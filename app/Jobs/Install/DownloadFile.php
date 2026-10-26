@@ -71,11 +71,9 @@ class DownloadFile extends Job
         if ($this->alias == 'core') {
             $info = Info::all();
 
-            $url = 'core/download/' . $this->version . '/' . $info['php'] . '/' . $info['mysql'];
-        } else {
-            $url = 'apps/' . $this->alias . '/download/' . $this->version . '/' . version('short') . '/' . setting('apps.api_key');
+            return 'core/download/' . $this->version . '/' . $info['php'] . '/' . $info['mysql'];
         }
 
-        return $url;
+        return 'apps/' . $this->alias . '/download/' . $this->version . '/' . version('short');
     }
 }

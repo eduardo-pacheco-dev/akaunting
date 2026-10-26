@@ -28,35 +28,11 @@ class Updates extends Controller
 
         $core = null;
 
-        $modules = [];
-
         if (isset($updates['core'])) {
             $core = $updates['core'];
         }
 
-        $rows = module()->all();
-
-        if ($rows) {
-            foreach ($rows as $row) {
-                $alias = $row->get('alias');
-
-                if (!isset($updates[$alias])) {
-                    continue;
-                }
-
-                $m = new \stdClass();
-                $m->name = $row->getName();
-                $m->alias = $row->get('alias');
-                $m->installed = $row->get('version');
-                $m->latest = $updates[$alias]->latest;
-                $m->errors = $updates[$alias]->errors;
-                $m->message = $updates[$alias]->message;
-
-                $modules[] = $m;
-            }
-        }
-
-        return view('install.updates.index', compact('core', 'modules'));
+        return view('install.updates.index', compact('core'));
     }
 
     public function changelog()

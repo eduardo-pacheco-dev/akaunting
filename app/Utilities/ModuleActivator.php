@@ -144,23 +144,7 @@ class ModuleActivator implements ActivatorInterface
 
         $this->company_id = $company_id;
 
-        $modules = Model::companyId($this->company_id)->pluck('enabled', 'alias')->toArray();
-
-        foreach ($modules as $alias => $enabled) {
-            if (in_array($alias, ['offline-payments', 'paypal-standard'])) {
-                continue;
-            }
-
-            $subscription = $this->getSubscription($alias);
-
-            if (! is_object($subscription)) {
-                continue;
-            }
-
-            $modules[$alias] = $subscription->status;
-        }
-
-        return $modules;
+        return Model::companyId($this->company_id)->pluck('enabled', 'alias')->toArray();
     }
 
     public function flushCache(): void

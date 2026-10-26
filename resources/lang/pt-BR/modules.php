@@ -2,7 +2,7 @@
 
 return [
 
-    'api_key'               => 'Chave de API',
+    'ready_message'         => 'Sua empresa está pronta para uso. Agora você pode criar sua primeira fatura.',
     'my_apps'               => 'Meus apps',
     'checkout'              => 'Finalizar pedido',
     'documentation'         => 'Documentação',
@@ -35,7 +35,6 @@ return [
     'if_paid_year'          => 'Ou <strong>:price/mês</strong> se pago anualmente',
     'install'               => 'Instalar',
     'buy_now'               => 'Comprar agora',
-    'get_api_key'           => '<a href=":url" target="_blank" class="text-green">Clique aqui</a> para obter sua chave de API.',
     'no_apps'               => 'Ainda não há apps nesta categoria.',
     'become_developer'      => 'Você é um desenvolvedor? <a href=":url" target="_blank">Aqui</a> você pode aprender como criar um app e começar a vender hoje!',
     'recommended_apps'      => 'Apps recomendados',

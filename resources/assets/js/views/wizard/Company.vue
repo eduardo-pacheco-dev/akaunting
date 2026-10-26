@@ -21,25 +21,6 @@
 
                         <div class="flex flex-col justify-between -mt-5 sm:mt-0">
                             <div class="grid sm:grid-cols-6 gap-x-8 gap-y-6 my-3.5 menu-scroll gap-10">
-                                <div class="sm:col-span-6 -mt-2">
-                                    <base-input
-                                        not-required
-                                        :label="translations.company.api_key"
-                                        name="api_key"
-                                        data-name="api_key"
-                                        :placeholder="translations.company.api_key"
-                                        v-model="company.api_key"
-                                        :error="onFailErrorGet('api_key')"
-                                    />
-
-                                    <div class="mt-2">
-                                        <small>
-                                            <a href="https://akaunting.com/dashboard" class="text-green" target="_blank">Click here</a>
-                                                to get your API key.
-                                        </small>
-                                    </div>
-                                </div>
-
                                 <div class="sm:col-span-3 -mt-2">
                                     <base-input
                                         not-required

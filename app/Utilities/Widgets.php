@@ -199,24 +199,4 @@ class Widgets
         return Str::kebab($arr[1]);
     }
 
-    public static function getCoreWidgets()
-    {
-        return static::$core_widgets;
-    }
-
-    public static function setCoreWidgets($widgets)
-    {
-        static::$core_widgets = $widgets;
-    }
-
-    public static function optimizeCoreWidgets()
-    {
-        $core_widgets = collect(static::getCoreWidgets());
-
-        $core_widgets->pop();
-
-        $core_widgets->push('App\Widgets\BankFeeds');
-
-        static::setCoreWidgets($core_widgets->all());
-    }
 }

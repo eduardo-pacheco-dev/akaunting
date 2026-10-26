@@ -85,8 +85,6 @@ class Kernel extends HttpKernel
             'wizard.redirect',
             'menu.admin',
             'permission:read-admin-panel',
-            'plan.limits',
-            'module.subscription',
         ],
 
         'wizard' => [
@@ -170,7 +168,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // Akaunting
-        'api.key' => \App\Http\Middleware\RedirectIfNoApiKey::class,
         'auth.basic.once' => \App\Http\Middleware\AuthenticateOnceWithBasicAuth::class,
         'auth.oauth.once' => \App\Http\Middleware\AuthenticateOnceWithOAuth::class,
         'auth.dynamic.once' => \App\Http\Middleware\AuthenticateOnceWithDynamicApi::class, // Unified Bearer+Basic, per-request detection (active: api group)
@@ -180,8 +177,6 @@ class Kernel extends HttpKernel
         'dropzone' => \App\Http\Middleware\Dropzone::class,
         'header.x' => \App\Http\Middleware\AddXHeader::class,
         'header.www.authenticate' =>  \App\Http\Middleware\AddWWWAuthenticateHeader::class,
-        'plan.limits' => \App\Http\Middleware\RedirectIfHitPlanLimits::class,
-        'module.subscription' => \App\Http\Middleware\RedirectIfHitModuleSubscription::class,
         'menu.admin' => \App\Http\Middleware\AdminMenu::class,
         'menu.portal' => \App\Http\Middleware\PortalMenu::class,
         'date.format' => \App\Http\Middleware\DateFormat::class,

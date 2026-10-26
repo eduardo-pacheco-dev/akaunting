@@ -12,18 +12,13 @@ use App\Interfaces\Job\ShouldCreate;
 use App\Models\Banking\Account;
 use App\Models\Common\Company;
 use App\Models\Setting\Currency;
-use App\Traits\Plans;
 use Illuminate\Support\Facades\Artisan;
 use OutOfBoundsException;
 
 class CreateCompany extends Job implements HasOwner, HasSource, ShouldCreate
 {
-    use Plans;
-
     public function handle(): Company
     {
-        $this->authorize();
-
         $current_company_id = company_id();
 
         event(new CompanyCreating($this->request));
@@ -44,22 +39,9 @@ class CreateCompany extends Job implements HasOwner, HasSource, ShouldCreate
             company($current_company_id)->makeCurrent();
         }
 
-        $this->clearPlansCache();
-
         event(new CompanyCreated($this->model, $this->request));
 
         return $this->model;
-    }
-
-    /**
-     * Determine if this action is applicable.
-     */
-    public function authorize(): void
-    {
-        $limit = $this->getAnyActionLimitOfPlan();
-        if (! $limit->action_status) {
-            throw new \Exception($limit->message);
-        }
     }
 
     protected function callSeeds(): void

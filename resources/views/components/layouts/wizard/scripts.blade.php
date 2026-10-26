@@ -11,10 +11,10 @@
     var wizard_countries = {!! json_encode(trans('countries')) !!};
     var wizard_currencies = {!! json_encode($currencies) !!};
     var wizard_currency_codes = {!! json_encode($currency_codes) !!};
-    var wizard_modules = {!! json_encode($modules) !!};
 </script>
 
-<script src="{{ asset('public/js/wizard/wizard.min.js?v=' . version('short')) }}"></script>
+@php($wizard_asset_version = file_exists(public_path('js/wizard/wizard.min.js')) ? filemtime(public_path('js/wizard/wizard.min.js')) : version('short'))
+<script src="{{ asset('public/js/wizard/wizard.min.js?v=' . $wizard_asset_version) }}"></script>
 
 @stack('body_css')
 

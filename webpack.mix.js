@@ -58,9 +58,6 @@ mix
     //Wizard
     .js('resources/assets/js/wizard.js', 'public/js/wizard/wizard.min.js')
 
-    // Modules
-    .js('resources/assets/js/views/modules/apps.js', 'public/js/modules/apps.min.js')
-
     // Portal
     .js('resources/assets/js/views/portal/apps.js', 'public/js/portal/apps.min.js')
 

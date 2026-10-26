@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Wizard;
 
 use App\Abstracts\Http\Controller;
 use App\Events\Wizard\WizardCompleted;
-use App\Traits\Modules;
 
 class Finish extends Controller
 {
-    use Modules;
-
     /**
      * Instantiate a new controller instance.
      */
@@ -28,15 +25,7 @@ class Finish extends Controller
     {
         $this->complete();
 
-        $data = [
-            'query' => [
-                'limit' => 6
-            ]
-        ];
-
-        $modules = $this->getFeaturedModules($data);
-
-        return $this->response('wizard.finish.index', compact('modules'));
+        return $this->response('wizard.finish.index');
     }
 
     /**

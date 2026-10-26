@@ -2,7 +2,6 @@
 
 return [
 
-    'api_key'               => 'API Key',
     'my_apps'               => 'My Apps',
     'checkout'              => 'Checkout',
     'documentation'         => 'Documentation',
@@ -35,13 +34,13 @@ return [
     'if_paid_year'          => 'Or <strong>:price/mo</strong> if paid yearly',
     'install'               => 'Install',
     'buy_now'               => 'Buy Now',
-    'get_api_key'           => '<a href=":url" target="_blank" class="text-green">Click here</a> to get your API key.',
     'no_apps'               => 'There are no apps in this category, yet.',
     'become_developer'      => 'Are you a developer? <a href=":url" target="_blank">Here</a> you can learn how to create an app and start selling today!',
     'recommended_apps'      => 'Recommended Apps',
     'can_not_install'       => 'Monthly subscriptions are available only on Cloud service. <a href="https://akaunting.com/upgrade-to-yearly" target="_blank">Learn more.</a>',
     'apps_managing'         => 'Check the most trending apps and start managing your finances professionally today.',
     'ready'                 => 'Ready',
+    'ready_message'         => 'Your company is ready to use. You can now create your first invoice.',
     'popular_this_week'     => 'Popular this week',
     'install_cloud'         => 'Use on Cloud Service',
     'get_cloud'             => 'Get Cloud Service',

@@ -50,7 +50,7 @@ class Companies extends Controller
 
         $fields = $request->all();
 
-        $skip_keys = ['company_id', '_method', '_token', '_prefix'];
+        $skip_keys = ['company_id', '_method', '_token', '_prefix', 'api_key'];
         $file_keys = ['company.logo'];
         $uploaded_file_keys = ['company.uploaded_logo'];
 
@@ -77,7 +77,6 @@ class Companies extends Controller
             }
 
             $real_key = match($key) {
-                'api_key'           => 'apps.api_key',
                 'financial_start'   => 'localisation.financial_start',
                 'locale'            => 'default.locale',
                 default             => 'company.' . $key,

@@ -14,11 +14,18 @@ class BankFeeds extends Widget
 
     public function show()
     {
+        if (! $this->moduleIsEnabled('bank-feeds')) {
+            return '';
+        }
+
         $module = $this->getModulesByWidget('bank-feeds');
+
+        if (empty($module)) {
+            return '';
+        }
 
         return $this->view('widgets.bank_feeds', [
             'module'            => $module,
-            'learn_more_url'    => $this->getCloudBankFeedsUrl(),
         ]);
     }
 }

@@ -2,14 +2,10 @@
 
 namespace App\Utilities;
 
-use App\Models\Module\Module;
 use App\Traits\SiteApi;
 use App\Traits\Jobs;
-use App\Jobs\Install\DisableModule;
-use App\Jobs\Install\UninstallModule;
 use App\Utilities\Date;
 use GrahamCampbell\Markdown\Facades\Markdown;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 class Versions
@@ -97,50 +93,7 @@ class Versions
                 return $versions;
             }
 
-            # Installed modules start
-            $modules = Arr::wrap($modules);
-
-            $installed_modules = [];
-            $module_version = '?modules=';
-
-            foreach ($modules as $module) {
-                if (is_string($module)) {
-                    $module = module($module);
-                }
-
-                if (! $module instanceof \Akaunting\Module\Module) {
-                    continue;
-                }
-
-                $alias = $module->get('alias');
-
-                $installed_modules[] = $alias;
-            }
-
-            $module_version .= implode(',', $installed_modules);
-
-            $url .= $module_version;
-            # Installed modules end
-
             $versions['core'] = static::getLatestVersion($url, $info['akaunting']);
-
-            // Then modules
-            foreach ($modules as $module) {
-                if (is_string($module)) {
-                    $module = module($module);
-                }
-
-                if (! $module instanceof \Akaunting\Module\Module) {
-                    continue;
-                }
-
-                $alias = $module->get('alias');
-                $version = $module->get('version');
-
-                $url = 'apps/' . $alias . '/version/' . $version . '/' . $info['akaunting'];
-
-                $versions[$alias] = static::getLatestVersion($url, $version);
-            }
 
             return $versions;
         });
@@ -195,61 +148,6 @@ class Versions
         $version->subscription = $body->data?->subscription ?? null;
 
         return $version;
-    }
-
-    public static function enforceSubscriptionStatus($alias, $version): void
-    {
-        if (! $version->subscription) {
-            return;
-        }
-
-        // A protected app stays in place whatever its subscription says, so there is
-        // nothing to enforce and the disable/uninstall jobs would only throw.
-        // if (in_array($alias, (array) config('module.protected', []))) {
-        //     return;
-        // }
-
-        if ($version->subscription->expired_at > Date::now()->startOfDay()) {
-            return;
-        }
-
-        $status = 'active';
-
-        switch ($version->subscription->status) {
-            case 'expired':
-            case 'canceled':
-                $status = 'disabled';
-                break;
-            case 'chargeback':
-            case 'not_paid':
-            case 'none':
-            case 'refund':
-                $status = 'uninstalled';
-                break;
-            default:
-                // Do nothing
-                break;
-        }
-
-        if ($status == 'active') {
-            return;
-        }
-
-        $module_companies = Module::allCompanies()->alias($alias)->get();
-
-        foreach ($module_companies as $module) {
-            switch ($status) {
-                case 'disabled':
-                    dispatch(new DisableModule($alias, $module->company_id));
-                    break;
-                case 'uninstalled':
-                    dispatch(new UninstallModule($alias, $module->company_id));
-                    break;
-                default:
-                    // Do nothing
-                    break;
-            }
-        }
     }
 
     public static function getUpdates()

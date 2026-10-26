@@ -6,12 +6,9 @@ use Akaunting\Money\Currency as MoneyCurrency;
 use App\Abstracts\View\Component;
 use App\Models\Common\Media;
 use App\Models\Setting\Currency;
-use App\Traits\Modules;
 
 class Scripts extends Component
 {
-    use Modules;
-
     public $company;
 
     public $translations;
@@ -19,8 +16,6 @@ class Scripts extends Component
     public $currencies;
 
     public $currency_codes;
-
-    public $modules;
 
     /**
      * Get the view / contents that represent the component.
@@ -38,12 +33,6 @@ class Scripts extends Component
         // Prepare codes
         $this->currency_codes = $this->getCurrencyCodes();
 
-        $this->modules = $this->getFeaturedModules([
-            'query' => [
-                'limit' => 5
-            ]
-        ]);
-
         return view('components.layouts.wizard.scripts');
     }
 
@@ -51,7 +40,6 @@ class Scripts extends Component
     {
         $company = company();
 
-        $company->api_key = setting('apps.api_key');
         $company->financial_start = setting('localisation.financial_start');
 
         $logo_id = setting('company.logo');
@@ -77,9 +65,7 @@ class Scripts extends Component
         return [
             'company' => [
                 'title' => trans_choice('general.companies', 1),
-                'api_key' => trans('modules.api_key'),
                 'form_enter' => trans('general.form.enter'),
-                'get_api_key' => trans('modules.get_api_key'),
                 'tax_number' => trans('general.tax_number'),
                 'financial_start' => trans('settings.localisation.financial_start'),
                 'address' => trans('settings.company.address'),
@@ -123,12 +109,7 @@ class Scripts extends Component
 
             'finish' => [
                 'title' => trans('modules.ready'),
-                'recommended_apps' => trans('modules.recommended_apps'),
-                'no_apps' =>  trans('modules.no_apps'),
-                'developer' => trans('modules.developer'),
-                'from' => trans('general.from'),
-                'apps_managing' =>  trans('modules.apps_managing'),
-                'reviews' => trans('modules.tab.reviews'),
+                'ready_message' => trans('modules.ready_message'),
                 'previous' => trans('companies.skip_step'),
                 'go_to_dashboard' => trans('general.go_to_dashboard'),
                 'create_first_invoice' => trans('general.create_first_invoice'),
