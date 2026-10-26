@@ -35,6 +35,16 @@ class App extends Provider
      */
     public function boot()
     {
+        // Keep config('app.url') aligned with the host used to reach the app in
+        // local development. `php artisan serve` announces 127.0.0.1 while
+        // APP_URL often points to localhost; the layouts build <base href>
+        // from config('app.url'), and a mismatched origin makes the Vue
+        // routers throw a SecurityError, leaving SPA pages (the wizard,
+        // dashboard, etc.) blank.
+        if ($this->app->isLocal() && ! $this->app->runningInConsole()) {
+            config(['app.url' => request()->getSchemeAndHttpHost()]);
+        }
+
         // Laravel db fix
         Schema::defaultStringLength(191);
 
